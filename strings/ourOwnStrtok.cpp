@@ -1,0 +1,46 @@
+#include<cstring>
+#include <iostream>
+using namespace std;
+
+char *mystrtok(char *str,char delim){
+    //string and single char acts as a delimiter
+    static char *input=NULL;
+    if(str!=NULL){
+        //we are making the first call
+        input=str;
+    }
+    
+    //checking the base case after the final token has been returned
+    if(input==NULL){
+        return NULL;
+    }
+    //start extracting tokens and store them in an array
+    char *output=new char[strlen(input)+1];
+    int i=0;
+    for(;input[i]!='\0';i++){
+        if(input[i]!=delim){
+            output[i]=input[i];
+        }else{
+            output[i]='\0';
+            input=input+i+1;
+            return output;
+        }
+    }
+    //when we hit '\0 ' in input
+    output[i]='\0';
+    input=NULL;
+    return output;
+    
+}
+
+int main() {
+	// your code goes here
+	char s[100]="Today, is a rainy, day";
+	char *ptr=mystrtok(s,',');
+	cout<<ptr<<endl;
+	while(ptr!=NULL){
+	    ptr=mystrtok(NULL,',');
+	    cout<<ptr<<endl;
+	}
+	return 0;
+}
